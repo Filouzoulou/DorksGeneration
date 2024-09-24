@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Dorks Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .dork-preview {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Google Dorks Generator</h1>
+    
+    <label for="site">Recherche par site (site:)</label>
+    <input type="text" id="site" placeholder="ex: www.exemple.com">
+
+    <label for="filetype">Type de fichier (filetype:)</label>
+    <input type="text" id="filetype" placeholder="ex: pdf, docx">
+
+    <label for="intitle">Recherche dans le titre (intitle:)</label>
+    <input type="text" id="intitle" placeholder="ex: rapport">
+
+    <label for="intext">Mot-clé dans le texte (intext:)</label>
+    <input type="text" id="intext" placeholder="ex: confidentiel">
+
+    <label for="keyword">Mot-clé principal</label>
+    <input type="text" id="keyword" placeholder="ex: sécurité, admin">
+
+    <div class="dork-preview" id="dork-preview">Votre Google Dork apparaîtra ici...</div>
+
+    <button onclick="generateDork()">Générer le Dork</button>
+
+    <!-- L'iframe affichera les résultats Google -->
+    <iframe id="google-results" src=""></iframe>
+</div>
+
+<script>
+    function generateDork() {
+        const site = document.getElementById('site').value;
+        const filetype = document.getElementById('filetype').value;
+        const intitle = document.getElementById('intitle').value;
+        const intext = document.getElementById('intext').value;
+        const keyword = document.getElementById('keyword').value;
+
+        let dork = '';
+
+        if (site) dork += `site:${site} `;
+        if (filetype) dork += `filetype:${filetype} `;
+        if (intitle) dork += `intitle:${intitle} `;
+        if (intext) dork += `intext:${intext} `;
+        if (keyword) dork += `${keyword} `;
+
+        dork = dork.trim();
+        document.getElementById('dork-preview').textContent = dork;
+
+        // Encodage de la requête pour l'URL
+        const encodedDork = encodeURIComponent(dork);
+        
+        // URL Google Search avec le dork généré
+        const googleSearchURL = `https://www.google.com/search?q=${encodedDork}`;
+
+        // Ouvrir les résultats dans un iframe
+        document.getElementById('google-results').src = googleSearchURL;
+    }
+</script>
+
+</body>
+</html>
